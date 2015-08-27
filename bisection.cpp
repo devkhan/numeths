@@ -16,6 +16,9 @@
 
 using namespace std;
 
+// Number of iterations.
+long iterations = 0;
+
 /**
  * Calculates the polynomial value.
  * 
@@ -45,6 +48,7 @@ double polynomial(double *coefficients, int size, double x)
  */
 double bisection(double *coefficients, int size, double a, double b)
 {
+	iterations++;
 	if (abs(polynomial(coefficients, size, (a+b)/2))<EPSILON)
 	{
 		return (a+b)/2;
@@ -103,7 +107,7 @@ int main(int argc, char const *argv[])
 	else
 	{
 		cout<<"Calculating roots..."<<endl;
-		cout<<"Approximated root: "<<bisection(coefficients, arguments.size(), a, b)<<endl;
+		cout<<"Approximated root: "<<bisection(coefficients, arguments.size(), a, b)<<" (iterations: "<<iterations<<" )."<<endl;
 		return 0;
 	}
 }
