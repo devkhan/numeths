@@ -69,7 +69,7 @@ int main(int argc, char const *argv[])
 
 	string degree;						// No of coefficients not used.
 	float a, b;
-	vector<string> argumetns;
+	vector<string> arguments;
 	double *coefficients;
 	coefficients = new double[argc-1];
 
@@ -95,7 +95,7 @@ int main(int argc, char const *argv[])
 
 	cout<<"\nInterval: ["<<a<<" , "<<b<<"]"<<endl;
 
-	if (function(coefficients, arguments.size(), a)*function(coefficients, arguments.size(), b) > 0)
+	if (polynomial(coefficients, arguments.size(), a)*polynomial(coefficients, arguments.size(), b) > 0)
 	{
 		cerr<<"Interval does not contain any root!!!"<<endl<<"Aborting...";
 		return 1;
@@ -103,7 +103,7 @@ int main(int argc, char const *argv[])
 	else
 	{
 		cout<<"Calculating roots..."<<endl;
-		cout<<"Approximated root: "<<bisection(coefficients, coef.size(), a, b)<<endl;
+		cout<<"Approximated root: "<<bisection(coefficients, arguments.size(), a, b)<<endl;
 		return 0;
 	}
 }
