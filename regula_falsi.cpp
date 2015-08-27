@@ -44,9 +44,9 @@ double polynomial(double *coefficients, int size, double x)
  * @param  b Interval end point
  * @return   x-intercept value of the secant in the given interval
  */
-double x_intercept(double a, double b)
+double x_intercept(double a, double b, double f_a, double f_b)
 {
-	return b - (polynomial(b)*((b-a)/(polynomial(b)-polynomial(a))));
+	return b - (f_b*((b-a)/(f_b-f_a)));
 }
 
 /**
@@ -61,16 +61,16 @@ double x_intercept(double a, double b)
 double falsi(double *coefficients, int size, double a, double b)
 {
 	iterations++;
-	if (abs(polynomial(coefficients, size, x_intercept(a, b)))<EPSILON)
+	if (abs(polynomial(coefficients, size, x_intercept(a, b, polynomial(coefficients, size, a), polynomial(coefficients, size, b))))<EPSILON)
 	{
-		return x_intercept(a, b);
+		return x_intercept(a, b, polynomial(coefficients, size, a), polynomial(coefficients, size, b));
 	}
 	else
 	{
-		if (polynomial(coefficients, size, x_intercept(a, b))*polynomial(coefficients, size, a) < 0)
-			falsi(coefficients, size, a, x_intercept(a, b));
+		if (polynomial(coefficients, size, b)*polynomial(coefficients, size, a) < 0)
+			falsi(coefficients, size, a, x_intercept(a, b, polynomial(coefficients, size, a), polynomial(coefficients, size, b)));
 		else
-			falsi(coefficients, size, x_intercept(a, b), b);
+			falsi(coefficients, size, x_intercept(a, b, polynomial(coefficients, size, a), polynomial(coefficients, size, b)), b);
 	}
 }
 
