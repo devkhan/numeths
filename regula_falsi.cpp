@@ -1,8 +1,8 @@
 /**
- * Program to find root of a polynomial using Bisection method.
+ * Program to find root of a polynomial using Regula Falsi (False Position) method.
  *
  * @author Devesh Khandelwal
- * @created 21-08-2015
+ * @created 27-08-2015
  * @modified 27-08-2015
  */
 
@@ -38,6 +38,18 @@ double polynomial(double *coefficients, int size, double x)
 }
 
 /**
+ * Calcuates the approximated root in the given interval.
+ * 
+ * @param  a Interval start point
+ * @param  b Interval end point
+ * @return   x-intercept value of the secant in the given interval
+ */
+double x_intercept(double a, double b)
+{
+	return b - (polynomial(b)*((b-a)/(polynomial(b)-polynomial(a))));
+}
+
+/**
  * Find root in a given interval.
  * 
  * @param  coefficients Array of coefficients
@@ -46,19 +58,19 @@ double polynomial(double *coefficients, int size, double x)
  * @param  b            Interval end
  * @return              Root of polynomial, if found
  */
-double bisection(double *coefficients, int size, double a, double b)
+double falsi(double *coefficients, int size, double a, double b)
 {
 	iterations++;
-	if (abs(polynomial(coefficients, size, (a+b)/2))<EPSILON)
+	if (abs(polynomial(coefficients, size, x_intercept(a, b)))<EPSILON)
 	{
-		return (a+b)/2;
+		return x_intercept(a, b);
 	}
 	else
 	{
-		if (polynomial(coefficients, size, (a+b)/2)*polynomial(coefficients, size, a) < 0)
-			bisection(coefficients, size, a, (a+b)/2);
+		if (polynomial(coefficients, size, x_intercept(a, b))*polynomial(coefficients, size, a) < 0)
+			falsi(coefficients, size, a, x_intercept(a, b));
 		else
-			bisection(coefficients, size, (a+b)/2, b);
+			falsi(coefficients, size, x_intercept(a, b), b);
 	}
 }
 
@@ -107,7 +119,7 @@ int main(int argc, char const *argv[])
 	else
 	{
 		cout<<"Calculating roots..."<<endl;
-		cout<<"Approximated root: "<<bisection(coefficients, arguments.size(), a, b)<<" (iterations: "<<iterations<<" )."<<endl;
+		cout<<"Approximated root: "<<falsi(coefficients, arguments.size(), a, b)<<" (iterations: "<<iterations<<" )."<<endl;
 		return 0;
 	}
 }
