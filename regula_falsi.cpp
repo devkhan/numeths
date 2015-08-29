@@ -7,17 +7,21 @@
  */
 
 #include <iostream>
+#include <iomanip>
 #include <cmath>
 #include <string>
 #include <vector>
 
 // Error tolerance of polynomial.
-#define EPSILON 0.000000000001
+#define EPSILON 9.16978e-005
 
 using namespace std;
 
 // Number of iterations.
 long iterations = 0;
+
+// Last two iterations.
+double pn = 0, pn1 = 0, pn2 = 0, error = 0;
 
 /**
  * Calculates the polynomial value.
@@ -49,6 +53,16 @@ double x_intercept(double a, double b, double f_a, double f_b)
 	return b - (f_b*((b-a)/(f_b-f_a)));
 }
 
+void calculate_error()
+{
+	// Check if 
+	if (++iterations > 3)
+	{
+		error = (pn - pn1) / (pn1 - pn2);
+		error = (abs(error)/abs(error-1))*abs(pn-pn1);
+	}
+}
+
 /**
  * Find root in a given interval.
  * 
@@ -60,14 +74,24 @@ double x_intercept(double a, double b, double f_a, double f_b)
  */
 double falsi(double *coefficients, int size, double a, double b)
 {
-	iterations++;
+	calculate_error();
+
+	cout<<"a = "<<a<<", b = "<<b<<endl;
+	pn2 = pn1;
+	cout<<pn2<<endl;
+	pn1 = pn;
+	cout<<pn1<<endl;
+	pn = x_intercept(a, b, polynomial(coefficients, size, a), polynomial(coefficients, size, b));
+	cout<<setprecision(10)<<pn<<endl;
+
+	cout<<"\nIteration: "<<iterations<<", Error: "<<error<<endl;
 	if (abs(polynomial(coefficients, size, x_intercept(a, b, polynomial(coefficients, size, a), polynomial(coefficients, size, b))))<EPSILON)
 	{
 		return x_intercept(a, b, polynomial(coefficients, size, a), polynomial(coefficients, size, b));
 	}
 	else
 	{
-		if (polynomial(coefficients, size, b)*polynomial(coefficients, size, a) < 0)
+		if (polynomial(coefficients, size, x_intercept(a, b, polynomial(coefficients, size, a), polynomial(coefficients, size, b)))*polynomial(coefficients, size, a) < 0)
 			falsi(coefficients, size, a, x_intercept(a, b, polynomial(coefficients, size, a), polynomial(coefficients, size, b)));
 		else
 			falsi(coefficients, size, x_intercept(a, b, polynomial(coefficients, size, a), polynomial(coefficients, size, b)), b);
@@ -119,7 +143,8 @@ int main(int argc, char const *argv[])
 	else
 	{
 		cout<<"Calculating roots..."<<endl;
-		cout<<"Approximated root: "<<falsi(coefficients, arguments.size(), a, b)<<" (iterations: "<<iterations<<" )."<<endl;
+		cout<<"Approximated root: "<<falsi(coefficients, arguments.size(), a, b)<<endl;
+		cout<<"Iterations: "<<iterations<<endl;
 		return 0;
 	}
 }
