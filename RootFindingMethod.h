@@ -13,7 +13,7 @@ class RootFindingMethod
 		int IterationCount;
 		double Tolerance;
 
-		enum
+
 };
 
 

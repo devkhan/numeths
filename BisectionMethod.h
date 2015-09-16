@@ -14,10 +14,7 @@ private:
 
 public:
 
-    BisectionMethod()
-    {
-
-    }
+    BisectionMethod();
 };
 
 
