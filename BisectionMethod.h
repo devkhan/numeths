@@ -5,17 +5,19 @@
 #ifndef NUMETHS_BISECTIONMETHOD_H
 #define NUMETHS_BISECTIONMETHOD_H
 
+namespace numeths
+{
+    class BisectionMethod
+    {
 
-class BisectionMethod {
+        private:
+            int A, B;
+            int c;
 
-private:
-    int A, B;
-    int c;
+        public:
 
-public:
-
-    BisectionMethod();
-};
-
+            BisectionMethod();
+    };
+}
 
 #endif //NUMETHS_BISECTIONMETHOD_H

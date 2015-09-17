@@ -6,15 +6,27 @@
 #define NUMETHS_ROOTFINDINGMETHOD_H
 
 
-class RootFindingMethod
+namespace numeths
 {
-	protected:
+    class RootFindingMethod
+    {
+        protected:
 
-		int IterationCount;
-		double Tolerance;
+            int IterationCount;
+            double Tolerance;
 
 
-};
+    public:
+        int getIterationCount() const
+        {
+            return IterationCount;
+        }
 
+        void setIterationCount(int IterationCount)
+        {
+            RootFindingMethod::IterationCount = IterationCount;
+        }
+    };
+}
 
 #endif //NUMETHS_ROOTFINDINGMETHOD_H
