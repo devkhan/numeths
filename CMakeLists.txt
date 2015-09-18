@@ -5,6 +5,8 @@ set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -std=c++11")
 
 set(SOURCE_FILES main.cpp BisectionMethod.cpp BisectionMethod.h RootFindingMethod.cpp RootFindingMethod.h)
 
+include_directories( ${BOOST_ROOT} )
+
 #### Building static library.
 add_library(numeths ${SOURCE_FILES})
 

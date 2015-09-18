@@ -1,6 +1,7 @@
-//
-// Created by deves on 9/13/2015.
-//
+/**
+ * Base class for all root finding methods.
+ *
+ */
 
 #ifndef NUMETHS_ROOTFINDINGMETHOD_H
 #define NUMETHS_ROOTFINDINGMETHOD_H
@@ -13,19 +14,18 @@ namespace numeths
         protected:
 
             int IterationCount;
-            double Tolerance;
+		    double Tolerance;
 
 
-    public:
-        int getIterationCount() const
-        {
-            return IterationCount;
-        }
+	    public:
 
-        void setIterationCount(int IterationCount)
-        {
-            RootFindingMethod::IterationCount = IterationCount;
-        }
+	        int getIterationCount();
+
+	        void setIterationCount(int);
+
+		    double getTolerance();
+
+		    void setTolerance(double);
     };
 }
 
