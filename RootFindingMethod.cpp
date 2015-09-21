@@ -25,4 +25,19 @@ namespace numeths
 	{
 		RootFindingMethod::Tolerance = Tolerance;
 	}
+
+	double RootFindingMethod::Evaluate(double x)
+	{
+		return f(x);
+	}
+
+	RootFindingMethod::RootFindingMethod(std::function<double(double)> f)
+	{
+		RootFindingMethod::f = f;
+	}
+
+	bool RootFindingMethod::Solve()
+	{
+		return false;
+	}
 }

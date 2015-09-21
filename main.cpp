@@ -1,4 +1,5 @@
 #include <iostream>
+#include <functional>
 #include "RootFindingMethod.h"
 
 using namespace std;
@@ -7,16 +8,17 @@ using namespace numeths;
 // Hack - Used in place of getch();
 char stoppage;
 
-double function(double x)
+double fx(double x)
 {
 	return 3*x*x*x + 45*x*x - 23*x + 3;
 }
 
 int main()
 {
-    RootFindingMethod rootFindingMethod;
+	std::function<double(double)> f = fx;
+    RootFindingMethod rootFindingMethod(f);
     rootFindingMethod.setIterationCount(10);
-    cout << "Iteration Count: " << rootFindingMethod.getIterationCount() << endl;
+    cout << "f(10) = " << rootFindingMethod.Evaluate(10) << endl;
 	cin >> stoppage;
     return 0;
 }

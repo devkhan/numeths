@@ -65,6 +65,14 @@ double x_intercept(double a, double b, double f_a, double f_b)
 */
 
 /**
+ * Find root using an initial approximation.
+ *
+ *
+ */
+double newton_raphson(double *coefficients, int size, double x0)
+{
+
+}
 
 /**
  * main function. Takes coefficients of a polynomial equation as command line arguments in increasinig polynomial degree.
