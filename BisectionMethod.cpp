@@ -3,3 +3,9 @@
 //
 
 #include "BisectionMethod.h"
+
+
+namespace numeths
+{
+
+}

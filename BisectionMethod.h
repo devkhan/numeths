@@ -5,9 +5,11 @@
 #ifndef NUMETHS_BISECTIONMETHOD_H
 #define NUMETHS_BISECTIONMETHOD_H
 
+#include "RootFindingMethod.h"
+
 namespace numeths
 {
-    class BisectionMethod
+    class BisectionMethod : public RootFindingMethod
     {
 
         private:
@@ -16,7 +18,7 @@ namespace numeths
 
         public:
 
-            BisectionMethod();
+            BisectionMethod(std::function<double(double)>);
     };
 }
 
