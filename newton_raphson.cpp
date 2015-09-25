@@ -42,36 +42,39 @@ double polynomial(double *coefficients, int size, double x)
 }
 
 /**
- * Calcuates the approximated root in the given interval.
+ * Calculates the derivative of the polynomial.
  * 
- * @param  a Interval start point
- * @param  b Interval end point
- * @return   x-intercept value of the secant in the given interval
+ * @param  coefficients Array of coefficients
+ * @param  size         Order of equation
+ * @param  x            Value to calculate, independent variable
+ * @return              Polynomial's derivative value, dependent variable
  */
-double x_intercept(double a, double b, double f_a, double f_b)
+double derivative(double *coefficients, int size, double x)
 {
-	return b - (f_b*((b-a)/(f_b-f_a)));
-}
-
-/*void calculate_error()
-{
-	// Check if 
-	if (++iterations > 3)
+	double sum=0;
+	for (int i = 1; i < size; ++i)
 	{
-		error = (pn - pn1) / (pn1 - pn2);
-		error = (abs(error)/abs(error-1))*abs(pn-pn1);
+		sum += coefficients[i]*i*pow(x,i-1);
 	}
+	return sum;
 }
-*/
 
 /**
  * Find root using an initial approximation.
- *
- *
+ * 
+ * @param  coefficients Array of coefficients
+ * @param  size         Order of equation
+ * @param  x            Initial approximation
+ * @return              Approximated root
  */
-double newton_raphson(double *coefficients, int size, double x0)
+double newton_raphson(double *coefficients, int size, double x)
 {
-
+	if (polynomial(coefficients, size, x)<EPSILON)
+	{
+		return x;
+	}
+	else
+		return newton_raphson(coefficients, size, x - polynomial(coefficients, size, x)/derivative(coefficients, size, x));
 }
 
 /**
@@ -84,7 +87,7 @@ int main(int argc, char const *argv[])
 {
 
 	string degree;						// No of coefficients not used.
-	float a, b;
+	float x;
 	vector<string> arguments;
 	double *coefficients;
 	coefficients = new double[argc-1];
@@ -101,26 +104,19 @@ int main(int argc, char const *argv[])
 	}
 
 	// Taking the interval limits.
-	cout<<"Enter interval: ";
-	cin>>a>>b;
+	cout<<"Enter initial approximation: ";
+	cin>>x;
 
 	// Displaying equation.
 	cout<<"Equation: ";
 	for(int i=0; i<arguments.size() ; i++)
 		cout<<((coefficients[arguments.size()-1-i]>0)?" + ":" - ")<<abs(coefficients[arguments.size()-1-i])<<"x^"<<arguments.size()-1-i;
 
-	cout<<"\nInterval: ["<<a<<" , "<<b<<"]"<<endl;
-
-	if (polynomial(coefficients, arguments.size(), a)*polynomial(coefficients, arguments.size(), b) > 0)
-	{
-		cerr<<"Interval does not contain any root!!!"<<endl<<"Aborting...";
-		return 1;
-	}
-	else
+	//cout<<"\nInterval: ["<<a<<" , "<<b<<"]"<<endl;
 	{
 		cout<<"Calculating roots..."<<endl;
-		cout<<"Approximated root: "<<root(coefficients, arguments.size(), a, b)<<endl;
-		cout<<"Iterations: "<<iterations<<endl;
+		cout<<"Approximated root: "<<newton_raphson(coefficients, arguments.size(), x)<<endl;
+		// cout<<"Iterations: "<<iterations<<endl;
 		return 0;
 	}
 }
