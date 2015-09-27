@@ -1,6 +1,6 @@
 #include <iostream>
 #include <functional>
-#include "RootFindingMethod.h"
+#include "BisectionMethod.h"
 
 using namespace std;
 using namespace numeths;
@@ -16,9 +16,8 @@ double fx(double x)
 int main()
 {
 	std::function<double(double)> f = fx;
-    RootFindingMethod rootFindingMethod(f);
-    rootFindingMethod.setIterationCount(10);
-    cout << "f(10) = " << rootFindingMethod.Evaluate(10) << endl;
-	cin >> stoppage;
+    BisectionMethod bisectionMethod(f, -16.0, -15.0);
+	bisectionMethod.Solve();
+    cout << "Root = " << bisectionMethod.Root() << endl;
     return 0;
 }
