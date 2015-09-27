@@ -13,12 +13,18 @@ namespace numeths
     {
 
         private:
-            int A, B;
-            int c;
+            double A, B;
+            double c;
 
         public:
 
-            BisectionMethod(std::function<double(double)>);
+            BisectionMethod(std::function<double(double)>, double, double);
+
+		    bool Solve();
+
+		    bool ShouldContinue();
+
+		    double Root();
     };
 }
 
