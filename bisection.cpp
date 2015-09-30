@@ -48,7 +48,7 @@ double polynomial(double *coefficients, int size, double x)
  */
 double bisection(double *coefficients, int size, double a, double b)
 {
-	cout<<"\nIteration: "<<++iterations<<", Error: "<<(a+b)/2-a<<endl;
+	iterations++;
 	if (abs(polynomial(coefficients, size, (a+b)/2))<EPSILON)
 	{
 		return (a+b)/2;
@@ -106,6 +106,7 @@ int main(int argc, char const *argv[])
 	}
 	else
 	{
+		cout<<endl;
 		cout<<"Calculating roots..."<<endl;
 		cout<<"Approximated root: "<<bisection(coefficients, arguments.size(), a, b)<<endl;
 		cout<<"Iterations: "<<iterations<<endl;

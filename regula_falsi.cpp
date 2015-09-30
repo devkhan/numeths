@@ -74,17 +74,14 @@ void calculate_error()
  */
 double falsi(double *coefficients, int size, double a, double b)
 {
+	iterations++;
+
 	calculate_error();
 
-	cout<<"a = "<<a<<", b = "<<b<<endl;
 	pn2 = pn1;
-	cout<<pn2<<endl;
 	pn1 = pn;
-	cout<<pn1<<endl;
 	pn = x_intercept(a, b, polynomial(coefficients, size, a), polynomial(coefficients, size, b));
-	cout<<setprecision(10)<<pn<<endl;
 
-	cout<<"\nIteration: "<<iterations<<", Error: "<<error<<endl;
 	if (abs(polynomial(coefficients, size, x_intercept(a, b, polynomial(coefficients, size, a), polynomial(coefficients, size, b))))<EPSILON)
 	{
 		return x_intercept(a, b, polynomial(coefficients, size, a), polynomial(coefficients, size, b));
@@ -142,6 +139,7 @@ int main(int argc, char const *argv[])
 	}
 	else
 	{
+		cout<<endl;
 		cout<<"Calculating roots..."<<endl;
 		cout<<"Approximated root: "<<falsi(coefficients, arguments.size(), a, b)<<endl;
 		cout<<"Iterations: "<<iterations<<endl;

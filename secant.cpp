@@ -95,6 +95,7 @@ int main(int argc, char const *argv[])
 		cout<<((coefficients[arguments.size()-1-i]>0)?" + ":" - ")<<abs(coefficients[arguments.size()-1-i])<<"x^"<<arguments.size()-1-i;
 
 	{
+		cout<<endl;
 		cout<<"Calculating roots..."<<endl;
 		cout<<"Approximated root: "<<secant(coefficients, arguments.size(), x0, x1)<<endl;
 		cout<<"Iterations: "<<iterations<<endl;
