@@ -8,7 +8,7 @@
 #define NUMETHS_REGULAFALSIMETHOD_H
 
 
-class RegulaFalsiMethod : public 
+class RegulaFalsiMethod : public RootFindingMethod
 {
 
 };
