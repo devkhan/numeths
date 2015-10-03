@@ -7,11 +7,23 @@
 #ifndef NUMETHS_REGULAFALSIMETHOD_H
 #define NUMETHS_REGULAFALSIMETHOD_H
 
-
-class RegulaFalsiMethod : public RootFindingMethod
+namespace numeths
 {
+	class RegulaFalsiMethod : public RootFindingMethod
+	{
+		private:
 
-};
+			double A, B, c;
 
+		public:
+			RegulaFalsiMethod(std::function<double(double)> fx, double, double);
+
+			bool Solve();
+
+			bool ShouldContinue();
+
+			double Root();
+	};
+}
 
 #endif //NUMETHS_REGULAFALSIMETHOD_H

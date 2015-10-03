@@ -1,6 +1,6 @@
 #include <iostream>
 #include <functional>
-#include "BisectionMethod.h"
+#include "RegulaFalsiMethod.h"
 
 using namespace std;
 using namespace numeths;
@@ -16,8 +16,9 @@ double fx(double x)
 int main()
 {
 	std::function<double(double)> f = fx;
-    BisectionMethod bisectionMethod(f, -16.0, -15.0);
+    RegulaFalsiMethod bisectionMethod(f, -16.0, -15.0);
 	bisectionMethod.Solve();
     cout << "Root = " << bisectionMethod.Root() << endl;
+	cin >> stoppage;
     return 0;
 }
