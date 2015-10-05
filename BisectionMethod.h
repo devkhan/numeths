@@ -25,6 +25,8 @@ namespace numeths
 		    bool ShouldContinue();
 
 		    double Root();
+
+		    void CalculateError();
     };
 }
 

@@ -51,6 +51,8 @@ namespace numeths
 		    double Evaluate(double x);
 
 		    virtual double Root() = 0;
+
+		    virtual void CalculateError() = 0;
     };
 }
 
