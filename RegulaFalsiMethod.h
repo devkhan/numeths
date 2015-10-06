@@ -24,7 +24,7 @@ namespace numeths
 
 			double Root();
 
-			void CalculateError();
+			double CalculateError();
 	};
 }
 

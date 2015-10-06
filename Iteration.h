@@ -14,9 +14,9 @@ namespace numeths
 
 			double Root;
 			double Residual;
+			double Error;
 
-
-			Iteration(double Root, double Residual);
+			Iteration(double Root, double Residual, double Error);
 	};
 }
 

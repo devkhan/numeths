@@ -21,7 +21,7 @@ namespace numeths
 		do
 		{
 			c = ( A*Evaluate(B) - B*Evaluate(A) ) / ( Evaluate(B)-Evaluate(A) );
-			_iterations.push_back(*(new Iteration(c, Evaluate(c))));
+			_iterations.push_back(*(new Iteration(c, Evaluate(c), CalculateError())));
 			(Evaluate(c)*Evaluate(A)<0) ? B = c : A = c;
 		} while (ShouldContinue());
 		return true;
@@ -56,6 +56,10 @@ namespace numeths
 	double RegulaFalsiMethod::Root()
 	{
 		return ( A*Evaluate(B) - B*Evaluate(A) ) / ( Evaluate(B)-Evaluate(A) );
-		;
+	}
+
+	double RegulaFalsiMethod::CalculateError()
+	{
+		return (B-A)/2;
 	}
 }

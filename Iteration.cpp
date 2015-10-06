@@ -6,6 +6,7 @@
 
 namespace numeths
 {
-	Iteration::Iteration(double Root, double Residual) : Root(Root), Residual(Residual)
+	Iteration::Iteration(double Root, double Residual, double Error) : Root(Root), Residual
+			(Residual), Error(Error)
 	{ }
 }

@@ -22,7 +22,7 @@ namespace numeths
 		do
 		{
 			c = (A+B)/2;
-			_iterations.push_back(*(new Iteration(c, Evaluate(c))));
+			_iterations.push_back(*(new Iteration(c, Evaluate(c), CalculateError())));
 			(Evaluate(c)*Evaluate(A)<0) ? B = c : A = c;
 		}while (ShouldContinue());
 		return true;
@@ -57,6 +57,11 @@ namespace numeths
 	double BisectionMethod::Root()
 	{
 		return (A + B) / 2;
+	}
+
+	double BisectionMethod::CalculateError()
+	{
+		return (B-A)/2;
 	}
 
 }

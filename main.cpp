@@ -19,6 +19,7 @@ int main()
     RegulaFalsiMethod bisectionMethod(f, -16.0, -15.0);
 	bisectionMethod.Solve();
     cout << "Root = " << bisectionMethod.Root() << endl;
+	cout << "Error = " << bisectionMethod.CalculateError() << endl;
 	cin >> stoppage;
     return 0;
 }

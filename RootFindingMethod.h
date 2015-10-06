@@ -52,7 +52,7 @@ namespace numeths
 
 		    virtual double Root() = 0;
 
-		    virtual void CalculateError() = 0;
+		    virtual double CalculateError() = 0;
     };
 }
 
