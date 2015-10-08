@@ -3,7 +3,7 @@ project(numeths)
 
 set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -std=c++11")
 
-set(SOURCE_FILES BisectionMethod.cpp BisectionMethod.h RootFindingMethod.cpp RootFindingMethod.h Iteration.cpp Iteration.h RegulaFalsiMethod.cpp RegulaFalsiMethod.h)
+set(SOURCE_FILES BisectionMethod.cpp BisectionMethod.h RootFindingMethod.cpp RootFindingMethod.h Iteration.cpp Iteration.h RegulaFalsiMethod.cpp RegulaFalsiMethod.h NewtonRaphsonMethod.cpp NewtonRaphsonMethod.h)
 
 include_directories( ${BOOST_ROOT} )
 
