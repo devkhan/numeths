@@ -9,11 +9,15 @@ ublas::matrix<double> _matrix;
 
 int main ()
 {    
-	int size;
-	cout << "Enter number of unknowns: ";
-	cin >> size;
+	int vars, equations;
 
-	_matrix.resize(size, size, false);
+	cout << "Enter number of unknowns: ";
+	cin >> vars;
+
+	cout << "Enter number of equations: ";
+	cin >> equations;
+
+	_matrix.resize(equations, vars+1, false);
 
 	for (unsigned i = 0; i < _matrix.size1 (); ++ i)
 		for (unsigned j = 0; j < _matrix.size2 (); ++ j)
@@ -24,7 +28,21 @@ int main ()
 	
 	cout << "matrix: " << endl;
 	cout << _matrix ;
+
+	for (int col = 0; col < _matrix.size2()-1 ; ++col)
+	{
+		
+		for (int row = row; row < _matrix.size1() ; ++row)
+		{
+			int ratio = _matrix(row, col) / _matrix(col, col);
+			for (int lower_col = col; lower_col < _matrix.size2(); ++lower_col)
+			{
+				_matrix(row, lower_col) = _matrix(row, lower_col) - ratio*_matrix(col, lower_col);
+			}
+		}
+	}
+
+	cout << "Lower triangle zero matrix: " << endl;
+	cout << _matrix ;
 	
-	_matrix [1] = _matrix[1] + _matrix[0];
-	cout << _matrix;
 }
