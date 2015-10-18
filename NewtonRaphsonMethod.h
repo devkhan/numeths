@@ -12,10 +12,11 @@ namespace numeths
 	class NewtonRaphsonMethod : RootFindingMethod
 	{
 			std::function<double(double)> f_x;
+            double x;
 
 		public:
-			NewtonRaphsonMethod(std::function<double(double)> fx, std::function<double(double)>
-			f_x);
+			NewtonRaphsonMethod(std::function<double(double)> fx, std::function<double(double)> f_x,
+                                    double x0);
 	};
 }
 
