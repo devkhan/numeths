@@ -17,6 +17,16 @@ namespace numeths
 		public:
 			NewtonRaphsonMethod(std::function<double(double)> fx, std::function<double(double)> f_x,
                                     double x0);
+
+            double EvalurateDerivative(double);
+
+            bool Solve();
+
+            bool ShouldContinue();
+
+            double Root();
+
+            double CalculateError();
 	};
 }
 
