@@ -1,15 +1,14 @@
-#include <boost/numeric/ublas/io.hpp>
-#include <boost/numeric/ublas/matrix.hpp>
-#include <boost/numeric/ublas/matrix_proxy.hpp>
+#include <iostream>
+#include <armadillo>
 
 using namespace std;
-namespace ublas = boost::numeric::ublas;
+using namespace arma;
 
-ublas::matrix<double> _matrix;
-
-int main ()
-{    
+int main(int argc, char** argv)
+{
 	int vars, equations;
+
+	mat aug_mat
 
 	cout << "Enter number of unknowns: ";
 	cin >> vars;
@@ -17,32 +16,44 @@ int main ()
 	cout << "Enter number of equations: ";
 	cin >> equations;
 
-	_matrix.resize(equations, vars+1, false);
+	aug_mat.resize(equations, vars+1);
 
-	for (unsigned i = 0; i < _matrix.size1 (); ++ i)
-		for (unsigned j = 0; j < _matrix.size2 (); ++ j)
+	for (unsigned i = 0; i < aug_mat.n_rows ; ++i)
+		for (unsigned j = 0; j < aug_mat.n_cols-1 ; ++ j)
 		{
 			cout << "Enter a" << i+1 << j+1 << " : ";
-			cin >> _matrix (i, j);
+			cin >> aug_mat(i, j);
 		}
-	
-	cout << "matrix: " << endl;
-	cout << _matrix ;
 
-	for (int col = 0; col < _matrix.size2()-1 ; ++col)
+
+	aug_mat.print("\nAugmented matrix before elimination:\n");
+
+	for (int i = 0; i < aug_mat.n_rows-1; ++i)
 	{
 		
-		for (int row = row; row < _matrix.size1() ; ++row)
+		for (int j = i+1; j < aug_mat.n_rows; ++j)
 		{
-			int ratio = _matrix(row, col) / _matrix(col, col);
-			for (int lower_col = col; lower_col < _matrix.size2(); ++lower_col)
-			{
-				_matrix(row, lower_col) = _matrix(row, lower_col) - ratio*_matrix(col, lower_col);
-			}
+			double ratio = aug_mat(j, i)/aug_mat(i, i);
+			aug_mat.row(j) = aug_mat.row(j) - ratio*aug_mat.row(i);
 		}
 	}
 
-	cout << "Lower triangle zero matrix: " << endl;
-	cout << _matrix ;
-	
+	aug_mat.print("\nAugmented matrix after lower elimination:\n");
+
+	for (int i = aug_mat.n_rows-1; i > 0; --i)
+	{
+		for (int j = i-1; j >= 0; --j)
+		{
+			double ratio = aug_mat(j, i)/aug_mat(i, i);
+			aug_mat.row(j) = aug_mat.row(j) - ratio*aug_mat.row(i);
+		}
+	}
+
+	aug_mat.print("\nAugmented matrix after upper elimination:\n");
+
+	vec b = aug_mat.diag();
+
+	b.print("\nSolutions:\n");
+
+	return 0;
 }
