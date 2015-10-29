@@ -1,0 +1,1 @@
+# Assignment - Root Finding Methods#### Devesh Khandelwal (72576)###### *V.1 - Algorithms for Computational Mathematics: Numerical Methods*###### *B. Tech. (Information Technology and Mathematical Innovations)*###### *Cluster Innovation Centre, University of Delhi*## Gaussian Elimination Method	
