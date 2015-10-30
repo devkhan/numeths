@@ -1,13 +1,29 @@
+/**
+ *
+ * C++ code for LU Decomposition Method
+ * @author : Devesh Khandelwal
+ * 28 Oct 2015
+ * 
+ */
 #include <iostream>
 #include <armadillo>
 
 using namespace std;
 using namespace arma;
 
+/**
+ * main function. Inputs a system of equations and outputs the solution to that system, if exists.
+ * 
+ * @param  argc Number of command line arguments.
+ * @param  argv Command line arguments.
+ * @return      0.
+ * 
+ */
 int main(int argc, char** argv)
 {
 	int vars, equations;
 
+	// Default system if nothing is provided.
 	mat coef_mat = {
 		{1, 2, 3},
 		{4, 5, 6},
@@ -26,6 +42,7 @@ int main(int argc, char** argv)
 
 	coef_mat.resize(equations, vars+1);
 
+	// Input equation coefficients. Complete augmented matrix.
 	for (unsigned i = 0; i < coef_mat.n_rows ; ++i)
 	{
 		cout << "Enter coefficients of equation " << i+1 << " : ";
@@ -37,8 +54,14 @@ int main(int argc, char** argv)
 
 	coef_mat.print("\nEquation matrix:\n");
 
+	// Initialize the b vector with values of last column of coefficients matrix.
 	b = coef_mat.col(coef_mat.n_cols-1);
+
+	// Reducing the size of the coefficients matrix by shedding the last column.
 	coef_mat.shed_col(coef_mat.n_cols-1);
+
+	// 	set elements along main diagonal to one and off-diagonal elements to zero.
+	// 	Identity matrix
 	l.eye();
 	u = coef_mat;
 
@@ -54,7 +77,11 @@ int main(int argc, char** argv)
 		for (int j = i+1; j < coef_mat.n_rows; ++j)
 		{
 			double ratio = u(j, i)/u(i, i);
+
+			// Upper triangular matrix(U) by applyring elementary row operations.
 			u.row(j) = u.row(j) - ratio*u.row(i);
+
+			// Getting Lower triangular matrix(L) from Identity matrix
 			l(j, i) = ratio;
 		}
 	}
@@ -62,10 +89,12 @@ int main(int argc, char** argv)
 	l.print("\nLower triangular matrix after elimination:\n");
 	u.print("\nUpper triangular matrix after elimination:\n");
 
+	// 'b' is B vector for 'y' // AX=B
 	y = (l.i())*b;
 
 	y.print("\n y vector:\n");
 
+	// 'y' is B vector for 'x'
 	x = (u.i())*y;
 
 	x.print("\n x vector:\n");
