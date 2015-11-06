@@ -1,7 +1,10 @@
 #include <iostream>
 #include <armadillo>
 #include <stdlib.h>
+#include <cmath>
 
+// Used because the double value may not be exactly zero.
+// So, this is to remove almost-singular errors.
 #define SINGULARITY_MARGIN 0.00001
 
 using namespace std;
@@ -43,13 +46,14 @@ int main(int argc, char** argv)
 		}
 	}
 
-	if (sqrt(square(det(aug_mat.submat(0, 0, aug_mat.n_rows-1, aug_mat.n_cols-2)))))
+	// Check singularity.
+	if (abs(det(aug_mat.submat(0, 0, aug_mat.n_rows-1, aug_mat.n_cols-2)))<SINGULARITY_MARGIN)
 	{
 		cout << "Error: Coeffecient matrix is singular. No solution exists.";
 		return EXIT_FAILURE;
 	}
 
-	aug_mat.print("\nAugmented matrix before elimination:\n");
+//	aug_mat.print("\nAugmented matrix before elimination:\n");
 
 	// Eliminate elemnts below the main diagonal i.e. make them zero using elementary
 	// row operations.
@@ -63,7 +67,7 @@ int main(int argc, char** argv)
 		}
 	}
 
-	aug_mat.print("\nAugmented matrix after lower elimination:\n");
+//	aug_mat.print("\nAugmented matrix after lower elimination:\n");
 
 	// Eliminate elemnts above the main diagonal i.e. make them zero using elementary
 	// row operations.
@@ -76,7 +80,7 @@ int main(int argc, char** argv)
 		}
 	}
 
-	aug_mat.print("\nAugmented matrix after upper elimination:\n");
+//	aug_mat.print("\nAugmented matrix after upper elimination:\n");
 
 	// Substituting a(i,i)*x(i) = b(i). Calculating x(i).
 	// Done by dividing the b vector by the diagonal of the coeffecient matrix.

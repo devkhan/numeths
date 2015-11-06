@@ -1,22 +1,26 @@
 /**
- *
  * C++ code for LU Decomposition Method
  * @author : Devesh Khandelwal
- * 28 Oct 2015
- * 
  */
+
 #include <iostream>
 #include <armadillo>
+#include <cmath>
+
+// Used because the double value may not be exactly zero.
+// So, this is to remove almost-singular errors.
+#define SINGULARITY_MARGIN 0.00001
 
 using namespace std;
 using namespace arma;
 
 /**
- * main function. Inputs a system of equations and outputs the solution to that system, if exists.
+ * main function. Inputs a system of equations and outputs the solution
+ * to that system, if exists. Uses LU decomposition method.
  * 
  * @param  argc Number of command line arguments.
  * @param  argv Command line arguments.
- * @return      0.
+ * @return      Exit Status.
  * 
  */
 int main(int argc, char** argv)
@@ -52,7 +56,15 @@ int main(int argc, char** argv)
 		}
 	}
 
-	coef_mat.print("\nEquation matrix:\n");
+	// coef_mat.print("\nEquation matrix:\n");
+
+	// Check singularity.
+	if (abs(det(coef_mat.submat(0, 0, coef_mat.n_rows-1, coef_mat.n_cols-2)))<
+		SINGULARITY_MARGIN)
+	{
+		cout << "Error: Coeffecient matrix is singular. No solution exists.";
+		return EXIT_FAILURE;
+	}
 
 	// Initialize the b vector with values of last column of coefficients matrix.
 	b = coef_mat.col(coef_mat.n_cols-1);
@@ -65,11 +77,11 @@ int main(int argc, char** argv)
 	l.eye();
 	u = coef_mat;
 
-	coef_mat.print("\nCoefficient matrix:\n");
+	// coef_mat.print("\nCoefficient matrix:\n");
 
-	b.print("\nAnswer vector:\n");
-	l.print("\nLower triangular matrix before elimination:\n");
-	u.print("\nUpper triangular matrix before elimination:\n");
+	// b.print("\nAnswer vector:\n");
+	// l.print("\nLower triangular matrix before elimination:\n");
+	// u.print("\nUpper triangular matrix before elimination:\n");
 
 	for (int i = 0; i < coef_mat.n_rows-1; ++i)
 	{
@@ -86,17 +98,17 @@ int main(int argc, char** argv)
 		}
 	}
 
-	l.print("\nLower triangular matrix after elimination:\n");
-	u.print("\nUpper triangular matrix after elimination:\n");
+	// l.print("\nLower triangular matrix after elimination:\n");
+	// u.print("\nUpper triangular matrix after elimination:\n");
 
 	// 'b' is B vector for 'y' // AX=B
 	y = (l.i())*b;
 
-	y.print("\n y vector:\n");
+	// y.print("\n y vector:\n");
 
 	// 'y' is B vector for 'x'
 	x = (u.i())*y;
 
-	x.print("\n x vector:\n");
+	x.print("\nSolution vector:\n");
 	return 0;
 }

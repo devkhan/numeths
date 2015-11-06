@@ -1,9 +1,26 @@
+/**
+ * Gaussian Elimination using pivoting.
+ * @author : Devesh Khandelwal
+ */
+
 #include <iostream>
 #include <armadillo>
+#include <cmath>
+
+// Used because the double value may not be exactly zero.
+// So, this is to remove almost-singular errors.
+#define SINGULARITY_MARGIN 0.00001
 
 using namespace std;
 using namespace arma;
 
+/**
+ * main function. Inputs a system of equations and outputs the solution to that
+ * system, if exists. Uses pivoting.
+ * @param  argc Number of command line arguments.
+ * @param  argv Command line arguments.
+ * @return      Exit Status.
+ */
 int main(int argc, char** argv)
 {
 	int vars, equations;
@@ -21,7 +38,8 @@ int main(int argc, char** argv)
 	cin >> equations;
 
 	aug_mat.resize(equations, vars+1);
-
+	
+	// Input equation coefficients. Complete augmented matrix.
 	for (unsigned i = 0; i < aug_mat.n_rows ; ++i)
 	{
 		cout << "Enter equation " << i+1 << " : ";
@@ -31,20 +49,26 @@ int main(int argc, char** argv)
 		}
 	}
 
+	// Check singularity.
+	if (abs(det(aug_mat.submat(0, 0, aug_mat.n_rows-1, aug_mat.n_cols-2)))<
+		SINGULARITY_MARGIN)
+	{
+		cout << "Error: Coeffecient matrix is singular. No solution exists.";
+		return EXIT_FAILURE;
+	}
 
-	aug_mat.print("\nAugmented matrix before pivoting:\n");
+	// aug_mat.print("\nAugmented matrix before pivoting:\n");
 
 	for (int i = 0; i < aug_mat.n_cols-1; ++i)
 	{
 		uword r;
 		aug_mat.col(i).max(r);
-		cout<<r<<i<<endl;
 		aug_mat.swap_rows(r, i);
 	}
 
-	aug_mat.print("\nAugmented matrix after pivoting:\n");
+	// aug_mat.print("\nAugmented matrix after pivoting:\n");
 
-	aug_mat.print("\nAugmented matrix before elimination:\n");
+	// aug_mat.print("\nAugmented matrix before elimination:\n");
 
 	for (int i = 0; i < aug_mat.n_rows-1; ++i)
 	{
@@ -56,7 +80,7 @@ int main(int argc, char** argv)
 		}
 	}
 
-	aug_mat.print("\nAugmented matrix after lower elimination:\n");
+	// aug_mat.print("\nAugmented matrix after lower elimination:\n");
 
 	for (int i = aug_mat.n_rows-1; i > 0; --i)
 	{
@@ -67,7 +91,7 @@ int main(int argc, char** argv)
 		}
 	}
 
-	aug_mat.print("\nAugmented matrix after upper elimination:\n");
+	// aug_mat.print("\nAugmented matrix after upper elimination:\n");
 
 	vec b = aug_mat.col(aug_mat.n_cols-1)/aug_mat.diag();
 

@@ -1,22 +1,27 @@
 /**
- *
- * C++ code for Gauss Jacobi Method
+ * Gauss Jacobi Method.
  * @author : Devesh Khandelwal
- * 28 Oct 2015
- * 
  */
+
 #include <iostream>
 #include <armadillo>
+#include <cmath>
+
+// Used because the double value may not be exactly zero.
+// So, this is to remove almost-singular errors.
+#define SINGULARITY_MARGIN 0.00001
+#define ITERATION_COUNT 50
 
 using namespace std;
 using namespace arma;
 
 /**
- * main function. Inputs a system of equations and outputs the solution to that system, if exists.
+ * main function. Inputs a system of equations and outputs the solution
+ * to that system, if exists. Uses Guass-Jacobi method.
  * 
  * @param  argc Number of command line arguments.
  * @param  argv Command line arguments.
- * @return      0.
+ * @return      Exit Status.
  * 
  */
 int main(int argc, char** argv)
@@ -56,7 +61,15 @@ int main(int argc, char** argv)
 		}
 	}
 
-	coef_mat.print("\nEquation matrix:\n");
+	// Check singularity.
+	if (abs(det(coef_mat.submat(0, 0, coef_mat.n_rows-1, coef_mat.n_cols-2)))<
+		SINGULARITY_MARGIN)
+	{
+		cout << "Error: Coeffecient matrix is singular. No solution exists.";
+		return EXIT_FAILURE;
+	}
+
+	// coef_mat.print("\nEquation matrix:\n");
 
 	// Initialize the b vector with values of last column of coefficients matrix.
 	b = coef_mat.col(coef_mat.n_cols-1);
@@ -64,11 +77,11 @@ int main(int argc, char** argv)
 	// Reducing the size of the coefficients matrix by shedding the last column.
 	coef_mat.shed_col(coef_mat.n_cols-1);
 
-	b.print("\nAnswer vector:\n");
-	x.print("\nSolution vector:\n");
+	// b.print("\nAnswer vector:\n");
+	// x.print("\nSolution vector:\n");
 
 	int count=0;
-	while(++count < 50)
+	while(++count < ITERATION_COUNT)
 	{
 		for (int i = 0 ; i < x.n_elem ; ++i)
 		{
