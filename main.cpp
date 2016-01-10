@@ -1,6 +1,6 @@
 #include <iostream>
 #include <functional>
-#include "RegulaFalsiMethod.h"
+#include "BisectionMethod.h"
 #include "NewtonRaphsonMethod.h"
 
 using namespace std;
@@ -23,7 +23,7 @@ int main()
 {
 	std::function<double(double)> f = fx;
     std::function<double(double)> dfx = f_x;
-    NewtonRaphsonMethod bisectionMethod(f, dfx, -15.0);
+    BisectionMethod bisectionMethod(f, -30.0, -15.0);
 	bisectionMethod.Solve();
     cout << "Root = " << bisectionMethod.Root() << endl;
 	cout << "Error = " << bisectionMethod.CalculateError() << endl;
